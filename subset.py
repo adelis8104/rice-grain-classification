@@ -3,8 +3,13 @@ import shutil
 import random
 
 def subset_dataset(src_root, dst_root, percentage):
-    if not os.path.exists(dst_root):
-        os.makedirs(dst_root)
+    # If destination folder exists, delete it completely
+    if os.path.exists(dst_root):
+        shutil.rmtree(dst_root)
+        print(f"Cleared existing directory: {dst_root}")
+
+    # Recreate the empty destination folder
+    os.makedirs(dst_root)
     
     for class_name in os.listdir(src_root):
         class_src = os.path.join(src_root, class_name)
