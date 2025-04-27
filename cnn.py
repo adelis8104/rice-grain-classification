@@ -12,8 +12,7 @@ from subset import subset_dataset
 
 def cnn_function(original_data, subset_data):
 
-    subset_dataset(original_data, subset_data, percentage=0.1)
-
+    #if you want to use original data and not subset, replace subset_data with original_data
     # Replace database path
     database = subset_data
     image_groups = [folder for folder in os.listdir(database) if not folder.endswith('.txt')]
