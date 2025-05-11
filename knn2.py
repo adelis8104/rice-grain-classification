@@ -49,5 +49,5 @@ def knn_evaluate_multiple_k(dataset_dir, image_size, k_values, test_size=0.2):
     plt.ylabel("Accuracy")
     plt.xticks(k_values)
     plt.grid(True)
-    plt.savefig('C:/Users/Antonio/Documents/CS 659 Project/rice-grain-classification/Results/subset-20-knn_k_vs_accuracy-minkowski.png')
+    plt.savefig('C:/Users/Antonio/Documents/CS 659 Project/rice-grain-classification/Results/accuracy-minkowski.png')
     plt.show()
