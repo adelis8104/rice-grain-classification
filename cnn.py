@@ -9,6 +9,8 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 from subset import subset_dataset
+from sklearn.metrics import confusion_matrix, classification_report
+
 
 def cnn_function(original_data, subset_data):
 
@@ -38,7 +40,7 @@ def cnn_function(original_data, subset_data):
     trainData = dataGenerator.flow_from_directory(
         database,
         target_size=(256,256),
-        batch_size=64,
+        batch_size=128,
         class_mode='categorical',
         subset='training',
         shuffle=True,
@@ -46,7 +48,7 @@ def cnn_function(original_data, subset_data):
     valData = dataGenerator.flow_from_directory(
         database,
         target_size=(256,256),
-        batch_size=64,
+        batch_size=128,
         class_mode='categorical',
         shuffle=False,
         subset='validation'
@@ -65,7 +67,7 @@ def cnn_function(original_data, subset_data):
     CNN.add(tf.keras.layers.Dense(units=5, activation='softmax'))
     CNN.compile(optimizer='adam',loss='categorical_crossentropy',metrics=['accuracy'])
 
-    History = CNN.fit(x=trainData, validation_data=valData, epochs=3)
+    History = CNN.fit(x=trainData, validation_data=valData, epochs=7)
 
     # (x_train, y_train), (x_test, y_test) = location
     # x_train
@@ -82,7 +84,7 @@ def cnn_function(original_data, subset_data):
     plt.xlabel('Epoch')
     plt.legend(['Train', 'Test'], loc='lower right')
     #Change directory to yours
-    plt.savefig('C:/Users/Antonio/Documents/CS 659 Project/rice-grain-classification/Results/10-per-accuracy_plot.png')  # Save the figure
+    plt.savefig('C:/Users/Antonio/Documents/CS 659 Project/rice-grain-classification/Results/20-per-128-batch-7-epoch-accuracy_plot-new.png')  # Save the figure
     plt.show()
 
 
@@ -100,5 +102,28 @@ def cnn_function(original_data, subset_data):
     plt.xlabel('Epoch')
     plt.legend(['Train', 'Test'], loc='best')
     #Change directory to yours
-    plt.savefig('C:/Users/Antonio/Documents/CS 659 Project/rice-grain-classification/Results/10-per-loss_plot.png')  # Save the figure
+    plt.savefig('C:/Users/Antonio/Documents/CS 659 Project/rice-grain-classification/Results/20-per-128-batch-7-epoch-loss_plot-new.png')  # Save the figure
     plt.show()
+    # Step 1: Predict on validation data
+    valData.reset()  # Ensure proper order of batches
+    predictions = CNN.predict(valData, verbose=1)
+    y_pred = np.argmax(predictions, axis=1)
+    y_true = valData.classes
+
+    # Step 2: Get class labels
+    class_labels = list(valData.class_indices.keys())
+
+    # Step 3: Confusion matrix
+    cm = confusion_matrix(y_true, y_pred)
+
+    plt.figure(figsize=(8, 6))
+    sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", xticklabels=class_labels, yticklabels=class_labels)
+    plt.title("CNN Confusion Matrix")
+    plt.ylabel("True Label")
+    plt.xlabel("Predicted Label")
+    plt.savefig('C:/Users/Antonio/Documents/CS 659 Project/rice-grain-classification/Results/20-per-128-batch-7-epoch-cnn_confusion_matrix.png')  # Save the figure
+    plt.show()
+
+    # Step 4: Classification report
+    print("Classification Report:\n")
+    print(classification_report(y_true, y_pred, target_names=class_labels))

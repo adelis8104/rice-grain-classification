@@ -7,6 +7,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from sklearn.model_selection import train_test_split
 
+
 def knn_classify_images(dataset_dir, image_size, k, test_size):
     X = []
     y = []
@@ -48,7 +49,7 @@ def knn_classify_images(dataset_dir, image_size, k, test_size):
     plt.title("Confusion Matrix")
     plt.ylabel("True Label")
     plt.xlabel("Predicted Label")
-    plt.savefig('C:/Users/Antonio/Documents/CS 659 Project/rice-grain-classification/Results/confusion_matrix.png')  # Save the figure
+    plt.savefig('C:/Users/Antonio/Documents/CS 659 Project/rice-grain-classification/Results/confusion_matrix-k7.png')  # Save the figure
     plt.show()
 
     # Classification Report
@@ -82,5 +83,5 @@ def plot_knn_predictions(X_test, y_test, y_pred, class_labels, image_size):
 
     plt.suptitle('Sample Correct and Incorrect KNN Predictions')
     plt.tight_layout()
-    plt.savefig('C:/Users/Antonio/Documents/CS 659 Project/rice-grain-classification/Results/knn_predictions.png')  # Save the figure
+    plt.savefig('C:/Users/Antonio/Documents/CS 659 Project/rice-grain-classification/Results/knn_predictions-k7.png')  # Save the figure
     plt.show()
