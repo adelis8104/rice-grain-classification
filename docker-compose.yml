@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    volumes:
+      #read-only
+      - ./Image_Dataset:/app/Image_Dataset:ro
+      #writable
+      - ./Rice_Subset_20:/app/Rice_Subset_20
+      - ./Results:/app/Results
+      - ./Features:/app/Features
+    # If GPU support needed:
+    # 1) switch the base image in the Dockerfile to:
+    #      FROM nvidia/cuda:11.7.1-cudnn8-runtime-ubuntu20.04
+    # 2) add under this service:
+    #      runtime: nvidia
+    #    and launch with:
+    #      docker-compose up --build
+    environment:
+      - PYTHONUNBUFFERED=1

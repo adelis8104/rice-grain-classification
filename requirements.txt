@@ -1,0 +1,10 @@
+matplotlib
+numpy
+opencv-python
+pandas
+psutil
+scikit-image
+scikit-learn
+seaborn
+tensorflow>=2.12.0
+joblib
