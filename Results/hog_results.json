@@ -6,8 +6,8 @@
       "kernel": "linear"
     },
     "accuracy": 0.9682666666666667,
-    "inference_time": 3.3771112000003995,
-    "memory_usage": 13541376,
+    "inference_time": 5.002173299995775,
+    "memory_usage": 13438976,
     "report": {
       "Arborio": {
         "precision": 0.9655986509274873,
@@ -98,8 +98,8 @@
       "n_estimators": 100
     },
     "accuracy": 0.9764666666666667,
-    "inference_time": 1.5090045000006285,
-    "memory_usage": 106545152,
+    "inference_time": 1.5434070999981486,
+    "memory_usage": 106348544,
     "report": {
       "Arborio": {
         "precision": 0.9686022957461174,
@@ -189,8 +189,8 @@
       "weights": "uniform"
     },
     "accuracy": 0.9676,
-    "inference_time": 4.831744500000241,
-    "memory_usage": -6914048,
+    "inference_time": 4.504180899995845,
+    "memory_usage": 6668288,
     "report": {
       "Arborio": {
         "precision": 0.962037962037962,

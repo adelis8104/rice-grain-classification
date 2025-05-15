@@ -41,7 +41,7 @@ pip install -r requirements.txt
 #### 4. Run the main file
 
 ```bash
-python src/project.py
+python -m src.project
 ```
 
 #### 5. Tuning Parameters
