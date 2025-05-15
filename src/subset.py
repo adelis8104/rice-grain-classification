@@ -2,6 +2,7 @@ import os
 import shutil
 import random
 
+
 def subset_dataset(src_root, dst_root, percentage):
     # If destination folder exists, delete it completely
     if os.path.exists(dst_root):
@@ -10,7 +11,7 @@ def subset_dataset(src_root, dst_root, percentage):
 
     # Recreate the empty destination folder
     os.makedirs(dst_root)
-    
+
     for class_name in os.listdir(src_root):
         class_src = os.path.join(src_root, class_name)
         if not os.path.isdir(class_src):
@@ -19,7 +20,7 @@ def subset_dataset(src_root, dst_root, percentage):
         class_dst = os.path.join(dst_root, class_name)
         os.makedirs(class_dst, exist_ok=True)
 
-        image_files = [f for f in os.listdir(class_src) if f.endswith('.jpg')]
+        image_files = [f for f in os.listdir(class_src) if f.endswith(".jpg")]
         sample_size = int(len(image_files) * percentage)
 
         sampled_files = random.sample(image_files, sample_size)

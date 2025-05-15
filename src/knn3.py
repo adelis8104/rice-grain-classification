@@ -11,12 +11,16 @@ from sklearn.model_selection import train_test_split
 def knn_classify_images(dataset_dir, image_size, k, test_size):
     X = []
     y = []
-    class_labels = [d for d in os.listdir(dataset_dir) if os.path.isdir(os.path.join(dataset_dir, d))]
-    
+    class_labels = [
+        d
+        for d in os.listdir(dataset_dir)
+        if os.path.isdir(os.path.join(dataset_dir, d))
+    ]
+
     for label_idx, label_name in enumerate(class_labels):
         class_path = os.path.join(dataset_dir, label_name)
         for image_name in os.listdir(class_path):
-            if image_name.endswith('.jpg'):
+            if image_name.endswith(".jpg"):
                 img_path = os.path.join(class_path, image_name)
                 img = cv2.imread(img_path)
                 img = cv2.resize(img, image_size)
@@ -29,7 +33,8 @@ def knn_classify_images(dataset_dir, image_size, k, test_size):
 
     # Split into training and testing
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=test_size, random_state=42, stratify=y)
+        X, y, test_size=test_size, random_state=42, stratify=y
+    )
 
     # Train KNN model
     knn = KNeighborsClassifier(n_neighbors=k)
@@ -45,11 +50,18 @@ def knn_classify_images(dataset_dir, image_size, k, test_size):
     # Confusion Matrix
     cm = confusion_matrix(y_test, y_pred)
     plt.figure(figsize=(8, 6))
-    sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", xticklabels=class_labels, yticklabels=class_labels)
+    sns.heatmap(
+        cm,
+        annot=True,
+        fmt="d",
+        cmap="Blues",
+        xticklabels=class_labels,
+        yticklabels=class_labels,
+    )
     plt.title("Confusion Matrix")
     plt.ylabel("True Label")
     plt.xlabel("Predicted Label")
-    plt.savefig('C:/Users/Antonio/Documents/CS 659 Project/rice-grain-classification/Results/confusion_matrix-k7.png')  # Save the figure
+    plt.savefig("Results/confusion_matrix-k7.png")  # Save the figure
     plt.show()
 
     # Classification Report
@@ -58,6 +70,7 @@ def knn_classify_images(dataset_dir, image_size, k, test_size):
 
     # Plot some correct and incorrect predictions
     plot_knn_predictions(X_test, y_test, y_pred, class_labels, image_size)
+
 
 def plot_knn_predictions(X_test, y_test, y_pred, class_labels, image_size):
     # Convert flattened vectors back to images
@@ -71,17 +84,19 @@ def plot_knn_predictions(X_test, y_test, y_pred, class_labels, image_size):
         plt.subplot(2, 5, i + 1)
         plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
         plt.title(f"Correct: {class_labels[y_pred[idx]]}")
-        plt.axis('off')
+        plt.axis("off")
 
     # Plot 5 incorrect predictions
     for i, idx in enumerate(incorrect_idx[:5]):
         img = X_test[idx].reshape(*image_size, 3)
         plt.subplot(2, 5, i + 6)
         plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-        plt.title(f"True: {class_labels[y_test[idx]]}\nPred: {class_labels[y_pred[idx]]}")
-        plt.axis('off')
+        plt.title(
+            f"True: {class_labels[y_test[idx]]}\nPred: {class_labels[y_pred[idx]]}"
+        )
+        plt.axis("off")
 
-    plt.suptitle('Sample Correct and Incorrect KNN Predictions')
+    plt.suptitle("Sample Correct and Incorrect KNN Predictions")
     plt.tight_layout()
-    plt.savefig('C:/Users/Antonio/Documents/CS 659 Project/rice-grain-classification/Results/knn_predictions-k7.png')  # Save the figure
+    plt.savefig("Results/knn_predictions-k7.png")  # Save the figure
     plt.show()
