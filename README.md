@@ -16,8 +16,10 @@ cd rice-grain-classification
 #### 2. Required Downloads
 
 - **Rice Image Dataset**
+
   1. Download from: https://www.muratkoklu.com/datasets/
   2. Unzip and place the dataset in a directory such as:
+
      ```
      rice-grain-classification/Rice_Image_Dataset/
      ```
@@ -30,6 +32,7 @@ pip install -r requirements.txt
 
 - TensorFlow: requires Python 3.5 – 3.9
 - OpenCV: if you encounter issues, install:
+
   ```bash
   pip install opencv-python
   pip install opencv-contrib-python
