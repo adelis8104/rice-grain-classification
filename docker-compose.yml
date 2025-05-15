@@ -17,3 +17,5 @@ services:
     #      runtime: nvidia
     #    and launch with:
     #      docker-compose up --build
+    environment:
+      - PYTHONUNBUFFERED=1

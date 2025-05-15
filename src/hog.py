@@ -114,7 +114,7 @@ def hog_function(
             xticklabels=class_labels,
             yticklabels=class_labels,
         )
-        plt.title("CNN Confusion Matrix")
+        plt.title(f"HOG {name} Confusion Matrix")
         plt.ylabel("True Label")
         plt.xlabel("Predicted Label")
         plt.savefig(f"Results/hog_{name}_confusion_matrix.png")  # Save the figure

@@ -6,6 +6,7 @@ from sklearn.metrics import accuracy_score, classification_report, confusion_mat
 from src.svm import train_svm
 from src.rf import train_rf
 from src.knn import train_knn
+from sklearn.cluster import MiniBatchKMeans
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -25,24 +26,47 @@ def load_sift_data(dataset_path, img_size=(64, 64)):
     return np.array(X), np.array(y)
 
 
-def extract_sift_features(images, dtype=np.float32, memmap_path=None):
-    n, length = len(images), 128
-    feats = (
-        np.memmap(memmap_path, mode="w+", dtype=dtype, shape=(n, length))
-        if memmap_path
-        else np.zeros((n, length), dtype=dtype)
-    )
+def extract_sift_features(images, dtype=np.float32, memmap_path=None, n_clusters=128):
     sift = cv2.SIFT_create()
+    all_descs = []
+    for img in images:
+        _, des = sift.detectAndCompute(img, None)
+        if des is not None:
+            all_descs.append(des)
+    if not all_descs:
+        raise ValueError("No SIFT descriptors found in any image.")
+    all_descs = np.vstack(all_descs)
+    print(
+        f"[SIFT] Clustering {all_descs.shape[0]} descriptors into {n_clusters} words..."
+    )
+
+    kmeans = MiniBatchKMeans(
+        n_clusters=n_clusters,
+        batch_size=min(10000, all_descs.shape[0]),
+        random_state=42,
+        n_init=3,
+    )
+    kmeans.fit(all_descs)
+
+    n = len(images)
+    K = n_clusters
+    if memmap_path:
+        os.makedirs(os.path.dirname(memmap_path), exist_ok=True)
+        feats = np.memmap(memmap_path, mode="w+", dtype=dtype, shape=(n, K))
+    else:
+        feats = np.zeros((n, K), dtype=dtype)
+
     for i, img in enumerate(images):
-        if i % 1000 == 0 and i > 0:
+        _, des = sift.detectAndCompute(img, None)
+        if des is not None:
+            words = kmeans.predict(des)
+            hist, _ = np.histogram(words, bins=np.arange(K + 1), density=True)
+            feats[i] = hist.astype(dtype)
+
+        if i > 0 and i % 1000 == 0:
             print(f"[SIFT] {i}/{n} processed")
-        kp, des = sift.detectAndCompute(img, None)
-        feats[i] = (
-            np.zeros(length, dtype=dtype)
-            if des is None
-            else np.mean(des, axis=0).astype(dtype)
-        )
-    print("[SIFT] Feature extraction complete.")
+    print("[SIFT] feature extraction complete.")
+
     return feats
 
 
@@ -92,7 +116,7 @@ def sift_function(
             xticklabels=class_labels,
             yticklabels=class_labels,
         )
-        plt.title("CNN Confusion Matrix")
+        plt.title(f"SIFT {name} Confusion Matrix")
         plt.ylabel("True Label")
         plt.xlabel("Predicted Label")
         plt.savefig(f"Results/sift_{name}_confusion_matrix.png")  # Save the figure
