@@ -6,7 +6,14 @@ To run this rice grain classification project, ensure you have Python 3.7 or hig
 
 ---
 
-#### 1. Required Downloads
+#### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Jaypee2109/rice-grain-classification.git
+cd rice-grain-classification
+```
+
+#### 2. Required Downloads
 
 - **Rice Image Dataset**
   1. Download from: https://www.muratkoklu.com/datasets/
@@ -14,13 +21,6 @@ To run this rice grain classification project, ensure you have Python 3.7 or hig
      ```
      rice-grain-classification/Rice_Image_Dataset/
      ```
-
-#### 2. Clone the Repository
-
-```bash
-git clone https://github.com/yourusername/rice-grain-classification.git
-cd rice-grain-classification
-```
 
 #### 3. Python Dependencies
 
