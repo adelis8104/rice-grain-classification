@@ -7,6 +7,7 @@ from sklearn.metrics import accuracy_score, classification_report, confusion_mat
 from src.svm import train_svm
 from src.rf import train_rf
 from src.knn import train_knn
+from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -79,18 +80,22 @@ def hog_function(
     scaler = StandardScaler()
     X_tr_s, X_te_s = scaler.fit_transform(X_tr), scaler.transform(X_te)
 
+    # Reduce to exactly 128 dimensions
+    pca = PCA(n_components=128, random_state=42)
+    X_tr_p, X_te_p = pca.fit_transform(X_tr_s), pca.transform(X_te_s)
+
     # Train models
-    svm_m = train_svm(X_tr_s, y_tr)
+    svm_m = train_svm(X_tr_p, y_tr)
     rf_m = train_rf(X_tr, y_tr)
-    knn_m = train_knn(X_tr_s, y_tr)
+    knn_m = train_knn(X_tr_p, y_tr)
 
     # Evaluate and collect metrics
     results = {}
     proc = psutil.Process()
     for name, mdl, X_e in [
-        ("svm", svm_m, X_te_s),
+        ("svm", svm_m, X_te_p),
         ("rf", rf_m, X_te),
-        ("knn", knn_m, X_te_s),
+        ("knn", knn_m, X_te_p),
     ]:
         print(f"[HOG] Evaluating {name}")
         mem_before, t0 = proc.memory_info().rss, time.perf_counter()
@@ -112,7 +117,7 @@ def hog_function(
         plt.title("CNN Confusion Matrix")
         plt.ylabel("True Label")
         plt.xlabel("Predicted Label")
-        plt.savefig("Results/hog_{name}_confusion_matrix.png")  # Save the figure
+        plt.savefig(f"Results/hog_{name}_confusion_matrix.png")  # Save the figure
 
         results[name] = {
             "best_params": getattr(mdl, "best_params_", {}),

@@ -95,7 +95,7 @@ def sift_function(
         plt.title("CNN Confusion Matrix")
         plt.ylabel("True Label")
         plt.xlabel("Predicted Label")
-        plt.savefig("Results/sift_{name}_confusion_matrix.png")  # Save the figure
+        plt.savefig(f"Results/sift_{name}_confusion_matrix.png")  # Save the figure
 
         results[name] = {
             "best_params": getattr(mdl, "best_params_", {}),
