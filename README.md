@@ -21,7 +21,7 @@ cd rice-grain-classification
   2. Unzip and place the dataset in a directory such as:
 
      ```
-     rice-grain-classification/Rice_Image_Dataset/
+     rice-grain-classification/Image_Dataset/
      ```
 
 #### 3. Python Dependencies

@@ -5,7 +5,7 @@ services:
     build: .
     volumes:
       #read-only
-      - ./Image_Dataset:/app/Rice_Image_Dataset:ro
+      - ./Image_Dataset:/app/Image_Dataset:ro
       #writable
       - ./Rice_Subset_20:/app/Rice_Subset_20
       - ./Results:/app/Results

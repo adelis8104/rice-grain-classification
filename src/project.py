@@ -17,7 +17,7 @@ from src.knn2 import knn_evaluate_multiple_k
 from src.hog import hog_function
 from src.sift import sift_function
 
-original_data = "Rice_Image_Dataset"
+original_data = "Image_Dataset"
 subset_data = "Rice_Subset_20"
 
 # Create the subset dataset That will populate the subset folder
