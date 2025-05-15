@@ -41,6 +41,8 @@ pip install -r requirements.txt
 python src/project.py
 ```
 
+---
+
 ## Using Docker
 
 We also provide a Docker setup to simplify environment configuration and ensure reproducibility.
