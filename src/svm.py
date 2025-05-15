@@ -3,7 +3,7 @@ from sklearn.svm import SVC
 from joblib import parallel_backend
 
 
-def train_svm(X_train, y_train, param_grid=None, cv=5, n_jobs=-1):
+def train_svm(X_train, y_train, param_grid=None, cv=3, n_jobs=-1):
     """
     Train and tune an SVM classifier using grid search.
     Falls back to a default SVM if grid search fails.
@@ -12,9 +12,9 @@ def train_svm(X_train, y_train, param_grid=None, cv=5, n_jobs=-1):
     print(f"[SVM] Starting grid search with CV={cv} and n_jobs={n_jobs}...")
     if param_grid is None:
         param_grid = {
-            "C": [0.1, 1, 10],
-            "kernel": ["linear", "rbf"],
-            "gamma": ["scale", "auto"],
+            "C": [1],
+            "kernel": ["linear"],
+            "gamma": ["scale"],
         }
     try:
         with parallel_backend("loky", n_jobs=n_jobs):

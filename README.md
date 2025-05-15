@@ -44,6 +44,10 @@ pip install -r requirements.txt
 python src/project.py
 ```
 
+#### 5. Tuning Parameters
+
+Additional hyper-parameters can be tested by extending the param_grid block in `knn.py`, `svm.py`, or `rf.py` as needed. The optimal parameters are determined automatically via grid search and attached to the returned model’s best_params.
+
 ---
 
 ## Using Docker

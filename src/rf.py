@@ -2,7 +2,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import RandomForestClassifier
 
 
-def train_rf(X_train, y_train, param_grid=None, cv=5, n_jobs=-1):
+def train_rf(X_train, y_train, param_grid=None, cv=3, n_jobs=-1):
     """
     Train and tune a Random Forest classifier using grid search.
     Falls back to a default Random Forest if grid search fails.
@@ -11,9 +11,9 @@ def train_rf(X_train, y_train, param_grid=None, cv=5, n_jobs=-1):
     print(f"[RF] Starting grid search with CV={cv} and n_jobs={n_jobs}...")
     if param_grid is None:
         param_grid = {
-            "n_estimators": [50, 100, 200],
-            "max_depth": [None, 10, 20],
-            "max_features": ["sqrt", "log2"],
+            "n_estimators": [100],
+            "max_depth": [None],
+            "max_features": ["sqrt"],
         }
     try:
         grid = GridSearchCV(

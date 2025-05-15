@@ -21,16 +21,14 @@ original_data = "Image_Dataset"
 subset_data = "Rice_Subset_20"
 
 # Create the subset dataset That will populate the subset folder
-subset_dataset(original_data, subset_data, percentage=0.2)
+# subset_dataset(original_data, subset_data, percentage=0.2)
 
-cnn_function(original_data, subset_data)
+# cnn_function(original_data, subset_data)
 
-knn_classify_images(original_data, image_size=(64, 64), k=7, test_size=0.2)
+# knn_classify_images(original_data, image_size=(64, 64), k=7, test_size=0.2)
 
-k_values = list(range(1, 16))  # You can adjust this range as needed
-knn_evaluate_multiple_k(
-    original_data, image_size=(64, 64), k_values=k_values, test_size=0.2
-)
+# k_values = list(range(1, 16))  # You can adjust this range as needed
+# knn_evaluate_multiple_k(original_data, image_size=(64, 64), k_values=k_values, test_size=0.2)
 
 results = hog_function(original_data, test_size=0.2)
 
